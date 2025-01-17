@@ -36,7 +36,7 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem; /* Increased gap between fields */
+    gap: 0.3rem; /* Increased gap between fields */
 }
 
 label {
@@ -47,7 +47,7 @@ label {
 }
 
 input, textarea {
-    padding: 0.3rem; /* Increased padding for better touchability */
+    padding: 0.5rem; /* Increased padding for better touchability */
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
@@ -60,8 +60,8 @@ input, textarea {
 }
 
 input:focus, textarea:focus {
-    border-color: #74ebd5;
-    box-shadow: 0 0 5px rgba(116, 235, 213, 0.8);
+    border-color: #9de6d9;
+    box-shadow: 0 0 10px rgb(126, 233, 214), 0 0 20px rgba(125, 222, 204, 0.7); /* Glowing effect on hover */
 }
 
 textarea {
