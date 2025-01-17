@@ -56,6 +56,7 @@ input, textarea {
     color: #333;
     outline: none;
     transition: border-color 0.3s;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 input:focus, textarea:focus {
