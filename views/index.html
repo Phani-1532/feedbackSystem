@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FeedBack System Platform</title>
+    <title>Feedback Form</title>
     <link rel="stylesheet" href="/assets/css/styles.css">
     <script defer src="/assets/js/script.js"></script>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>FeedBack System</h1>
-        <form action="/submit-feedback" method="POST">
+        <form id="feedbackForm" action="/submit-feedback" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <br>
             <label for="contactNumber">Contact Number:</label>
             <input type="text" id="contactNumber" name="contactNumber" required>
+            <span id="phoneError" class="error"></span>
             <br>
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -26,6 +33,20 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            const contactNumber = document.getElementById('contactNumber').value;
+            const phoneError = document.getElementById('phoneError');
+            const phoneNumberPattern = /^\d+$/;
+
+            if (!phoneNumberPattern.test(contactNumber)) {
+                event.preventDefault();
+                phoneError.textContent = 'Invalid phone number. Please enter only digits.';
+            } else {
+                phoneError.textContent = '';
+            }
+        });
+    </script>
 </body>
 </html>
 

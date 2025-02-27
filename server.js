@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Feedback = require('./models/Feedback');
 
-
 const app = express();
 const port = 3000;
 
@@ -29,11 +28,30 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submit-feedback', async (req, res) => {
+    const { name, contactNumber, email, feedback } = req.body;
+
+    // Validate phone number
+    const phoneNumberPattern = /^\d+$/;
+    if (!phoneNumberPattern.test(contactNumber)) {
+        return res.status(400).send('Invalid phone number. Please enter only digits.');
+    }
+
+    // Check if feedback already exists for the same user
+    const existingFeedback = await Feedback.findOne({ $or: [{ email }, { contactNumber }, { name }] });
+    if (existingFeedback) {
+        return res.status(400).send('Your feedback already exists.');
+    }
+
+    // Validate feedback length
+    if (feedback.length < 20) {
+        return res.status(400).send('Feedback must be at least 20 characters long.');
+    }
+
     const newFeedback = new Feedback({
-        name: req.body.name,
-        contactNumber: req.body.contactNumber,
-        email: req.body.email,
-        feedback: req.body.feedback,
+        name,
+        contactNumber,
+        email,
+        feedback,
     });
 
     try {
@@ -152,6 +170,18 @@ app.post('/submit-feedback', async (req, res) => {
         console.error('Error submitting feedback:', err.message);
         res.status(500).send('There was an error in submitting your feedback');
     }
+});
+
+// New route to check if the name, email, or phone number already exists
+app.post('/check-feedback', async (req, res) => {
+    const { name, contactNumber, email } = req.body;
+
+    const existingFeedback = await Feedback.findOne({ $or: [{ email }, { contactNumber }, { name }] });
+    if (existingFeedback) {
+        return res.status(400).json({ message: '<span class="error">Feedback already exists for this user.</span>' });
+    }
+
+    res.status(200).json({ message: 'OK' });
 });
 
 app.listen(port, () => {
