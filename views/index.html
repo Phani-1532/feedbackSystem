@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Form</title>
     <link rel="stylesheet" href="/assets/css/styles.css">
-    <script defer src="/assets/js/script.js"></script>
+    
     <style>
         .error {
             color: red;
@@ -33,20 +33,9 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-    <script>
-        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
-            const contactNumber = document.getElementById('contactNumber').value;
-            const phoneError = document.getElementById('phoneError');
-            const phoneNumberPattern = /^\d+$/;
 
-            if (!phoneNumberPattern.test(contactNumber)) {
-                event.preventDefault();
-                phoneError.textContent = 'Invalid phone number. Please enter only digits.';
-            } else {
-                phoneError.textContent = '';
-            }
-        });
-    </script>
+    <script src="/assets/js/script.js"></script>
+    
 </body>
 </html>
 
